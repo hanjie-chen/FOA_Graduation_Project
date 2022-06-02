@@ -1,9 +1,9 @@
 %% FOA封装程序 
-%% 清除环境
+%% 清除环境 
 clc;
 clear all;
 close all;
-% for gen=1:10 % 用于多次比较使用
+% for gen=1:10 % 跑10次算法 求得算法结果的平均值和标准差
 %% 初始化参数
 % 选择测试函数,测试函数的定义域(left,right),测试函数维度
 [Fitness_Function, coordinate_left_board, coordinate_right_board, dimension] = Test_Function(26);
@@ -12,7 +12,7 @@ population_size=50;                                                             
 coordinate_range=(coordinate_right_board-coordinate_left_board)/2;                      %坐标的范围
 coordiante_offset=(coordinate_right_board-coordinate_range);                            %坐标距离原点的偏移程度
 max_fly_distance=1;                                                  
-% 记录每次迭代找到的最优值
+% 记录每次迭代找到的最优值 现在是一个全0数组
 Smell_best=zeros(1,max_iteration);      
 %% 初始化果蝇坐标；
 X_axis=coordinate_range*(2*(rand(1,dimension)-1/2))+coordiante_offset;
@@ -55,5 +55,4 @@ plot(Smell_best);   %绘制每一代最优浓度值
 xlabel('iteration trun');
 ylabel('Fitness Value');
 title('F26');
-
 

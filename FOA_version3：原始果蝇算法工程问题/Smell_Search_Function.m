@@ -44,12 +44,6 @@ function [X,Y,P]=Smell_Search_Function(X_axis,Y_axis,P_axis,population_size,dim,
 end
 
 function [right_value]=Limit_Board(base, left_board, right_board, L)
-% while 1
-%     right_value = base + L*(2*(rand-1/2));
-%     if right_value >= left_board || right_value <= right_board
-%         break;
-%     end
-% end
 if base > right_board
     right_value=right_board;
 end
