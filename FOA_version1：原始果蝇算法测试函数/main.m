@@ -11,12 +11,9 @@ max_iteration=1000;                                                             
 population_size=50;                                                                     %初始化种群个数
 coordinate_range=(coordinate_right_board-coordinate_left_board)/2;                      %坐标的范围
 coordiante_offset=(coordinate_right_board-coordinate_range);                            %坐标距离原点的偏移程度
-% max_fly_distance=coordinate_range/100;                                                  %果蝇单次最大飞行范围,坐标范围的百分之一
 max_fly_distance=1;                                                  
-%% 初始化矩阵
-X_best=zeros(max_iteration,dimension);
-Y_best=zeros(max_iteration,dimension);
-Smell_best=zeros(1,max_iteration);      %记录每次迭代找到的最优值
+% 记录每次迭代找到的最优值
+Smell_best=zeros(1,max_iteration);      
 %% 初始化果蝇坐标；
 X_axis=coordinate_range*(2*(rand(1,dimension)-1/2))+coordiante_offset;
 Y_axis=coordinate_range*(2*(rand(1,dimension)-1/2))+coordiante_offset;
@@ -44,8 +41,6 @@ for iteration_turn=1:max_iteration
     end
 %   记录每次迭代的最优值和坐标
     Smell_best(iteration_turn)=SmellBest;
-    X_best(iteration_turn,:)=X_axis;
-    Y_best(iteration_turn,:)=Y_axis;
 end
 % S(gen)=SmellBest;
 % end
@@ -61,16 +56,4 @@ xlabel('iteration trun');
 ylabel('Fitness Value');
 title('F26');
 
-
-% figure('name', '果蝇群体坐标变化')
-% hold on
-% plot(X_best(:,1),Y_best(:,1),'r.');%绘制果蝇群X_axis，Y_axis的变化
-% plot(X_best(:,2),Y_best(:,2),'b.');
-% plot(X_best(:,3),Y_best(:,3),'k.');
-
-% figure('name', '最后果蝇群体的分布')
-% plot(X(:,1),Y(:,1),'b.');%绘制最后一代的果蝇群;
-% mean(S)
-% min(S)
-% std(S)
 
