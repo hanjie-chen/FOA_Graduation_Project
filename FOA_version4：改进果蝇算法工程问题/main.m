@@ -1,4 +1,4 @@
-%% 原始FOA 400个用户和36个AP节点的建模程序
+%% 改进FOA 动态步长改进 用户400 连接节点36个
 % version:4.0 author:hanjie-chen last update:2022/4/28
 %% 清除环境
 clc;
@@ -7,10 +7,10 @@ close all;
 % for gen=1:10 % 用于多次比较使用
 %% 初始化参数
 aln_number = 36;                                                                        %汇聚层节点个数
-max_iteration=100000;                                                                     %最大迭代次数
+max_iteration=100000;                                                                   %最大迭代次数
 population_size=50;                                                                     %初始化种群个数
-max_fly_distance_initial=10;                                                            %果蝇单词最大飞行距离       
-Power_min = -70;                                                                        %最低通信功率
+max_fly_distance_initial=1;                                                             %果蝇单词最大飞行距离初始值      
+Power_min = -80;                                                                        %最低通信功率
 %% 初始化矩阵
 X_best=zeros(max_iteration,aln_number);
 Y_best=zeros(max_iteration,aln_number);
@@ -21,10 +21,9 @@ Total_Power_bset = zeros(1, max_iteration);     %记录每次迭代找到的功�
 %% 初始化汇聚层坐标和汇聚层功率；
 X_axis=100*rand(1,aln_number);
 Y_axis=100*rand(1,aln_number);
-% P_axis=11.5*((rand(1,aln_number)-0.5)*2)+12.5;
-P_axis=ones(1,aln_number)*24;
+P_axis=11.5*((rand(1,aln_number)-0.5)*2)+12.5;
 %% 首次嗅觉搜索
-[X,Y,P]=Smell_Search_Function(X_axis,Y_axis,P_axis,population_size,aln_number,max_fly_distance_initial);
+[X,Y,P]=Smell_Search_Function(X_axis,Y_axis,P_axis,population_size,aln_number,max_fly_distance_initial, max_fly_distance_initial);
 %% 首次视觉搜索同时找到首个最佳适应度果蝇个体
 [BestSmell,Index,Coverage_Rate,Total_Power]=Fitness_Function(X,Y,P,Power_min,population_size,aln_number);
 %创建新变量SmellBest为全局最优
@@ -35,8 +34,9 @@ Y_axis=Y(Index,:);
 P_axis=P(Index,:);
 %% 迭代循环
 for iteration_turn=1:max_iteration
+    [max_fly_distance_initial_location, max_fly_distance_initial_power]=Dynamic_Fly_Distance(iteration_turn, max_iteration, 1, 100, 23);
     %% 嗅觉搜索
-    [X,Y,P]=Smell_Search_Function(X_axis,Y_axis,P_axis,population_size,aln_number,max_fly_distance_initial);
+    [X,Y,P]=Smell_Search_Function(X_axis,Y_axis,P_axis,population_size,aln_number,max_fly_distance_initial_location, max_fly_distance_initial_power);
     %% 视觉搜索
     [BestSmell,Index,Coverage_Rate,Total_Power]=Fitness_Function(X,Y,P,Power_min,population_size,aln_number);
 %   如果本次搜索发现适应度更好，那么更新位置

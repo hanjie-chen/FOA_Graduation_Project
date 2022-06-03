@@ -29,6 +29,7 @@ X_axis=X(Index,:);
 Y_axis=Y(Index,:);
 %% 迭代循环
 for iteration_turn=1:max_iteration
+    %% 动态变化步长
     max_fly_distance_dynamic = Dynamic_Fly_Distance(iteration_turn, max_iteration, max_fly_distance_initial, coordinate_range);
     %% 嗅觉搜索
     [Smell_i,X,Y]=Smell_Search_Function(X_axis,Y_axis,population_size,dimension,max_fly_distance_dynamic);

@@ -1,6 +1,7 @@
 %输入参数：单只果蝇坐标(X_axis && Y_axis && P_axis)，果蝇种群大小，果蝇种群坐标维度，果蝇种群单词移动最大步长
 %输出参数：果蝇种群嗅觉搜索之后新坐标(X && Y)
 %本修改之后的函数用于真实情况建模
+%其实这个地方已经不算是经典的果蝇算法了，因为我让第一只果蝇保存上一次果蝇群体找到的的最优值，然经典的果蝇算法是不保存的。
 %% version：4.0 last update:2022/4/28 author:hanjie-chen
 
 function [X,Y,P]=Smell_Search_Function(X_axis,Y_axis,P_axis,population_size,dim,L)
@@ -42,7 +43,7 @@ function [X,Y,P]=Smell_Search_Function(X_axis,Y_axis,P_axis,population_size,dim,
         end
     end
 end
-
+% 边界限制函数，如果超出边界那么直接赋值为边界值
 function [right_value]=Limit_Board(base, left_board, right_board, L)
 if base > right_board
     right_value=right_board;
